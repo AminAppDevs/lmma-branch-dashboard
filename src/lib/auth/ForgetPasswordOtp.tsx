@@ -3,14 +3,12 @@ import { ToastContainer, toast } from "react-toastify";
 import logo from "../../assets/logo.svg";
 import AuthCode from "react-auth-code-input";
 import { loginService } from "../../services/auth/login.services";
-import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
-const LoginOtp = (props: any) => {
+const ForgetPasswordOtp = (props: any) => {
   const [loading, setLoading] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
-  const [, setCookie] = useCookies(["isLogin", "adminId", "token"]);
   const { state } = useLocation();
   const navigate = useNavigate();
   const handleConfirmCode = () => {
@@ -33,25 +31,7 @@ const LoginOtp = (props: any) => {
               theme: "colored",
             });
             setLoading(false);
-
-            loginService({ phone: state.phone, password: state.password })
-              .then((value) => {
-                setLoading(false);
-                setCookie("isLogin", true, {
-                  expires: new Date(Date.now() + 10000),
-                });
-                setCookie("adminId", value.adminId, {
-                  expires: new Date(Date.now() + 10000),
-                });
-                setCookie("token", value.token, {
-                  expires: new Date(Date.now() + 10000),
-                });
-                navigate("/");
-              })
-              .catch((error) => {
-                setLoading(false);
-                console.log(error);
-              });
+            navigate("/new_password");
             console.log(props.location.state);
           })
           .catch((error: any) => {
@@ -119,4 +99,4 @@ const LoginOtp = (props: any) => {
   );
 };
 
-export default LoginOtp;
+export default ForgetPasswordOtp;

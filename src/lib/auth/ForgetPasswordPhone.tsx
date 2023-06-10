@@ -1,10 +1,13 @@
-import logo from "../../assets/logo.svg";
-import { SubmitHandler, useForm } from "react-hook-form";
 import React from "react";
-import FromInput from "./components/FromInput";
-import { loginService } from "../../services/auth/login.services";
+import logo from "../../assets/logo.svg";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { SubmitHandler, useForm } from "react-hook-form";
+import { checkBranchAdminExistService } from "../../services/auth/login.services";
+import FromInput from "./components/FromInput";
+import { Oval } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import {
   ConfirmationResult,
@@ -12,37 +15,20 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
-import { Oval } from "react-loader-spinner";
-declare global {
-  interface Window {
-    recaptchaVerifier: any;
-    confirmationResult: any;
-  }
-}
 
-export type LoginInput = {
+export type ResetPasswordPhoneInput = {
   phone: string;
-  password: string;
 };
-const Login = () => {
+
+const ForgetPasswordPhonePage = () => {
+  const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-  const [isLoginLoading, setLoginLoading] = React.useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginInput>({
-    defaultValues: {
-      phone: "",
-      password: "",
-    },
-  });
 
   ///// OTP Func
   const requestOtp: any = (phone: string) => {
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
-        "login-otp",
+        "rest-password-otp",
         {
           size: "invisible",
           callback: (response: any) => {
@@ -61,21 +47,33 @@ const Login = () => {
       .catch((error) => console.log(error));
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetPasswordPhoneInput>({
+    defaultValues: {
+      phone: "",
+    },
+  });
   /// form submit
-  const onSubmit: SubmitHandler<LoginInput> = (data: LoginInput) => {
-    setLoginLoading(true);
-    if (!isLoginLoading) {
-      loginService(data)
-        .then((value: any) => {
-          console.log(value);
+  const onSubmit: SubmitHandler<ResetPasswordPhoneInput> = (
+    data: ResetPasswordPhoneInput
+  ) => {
+    setLoading(true);
+    if (!isLoading) {
+      checkBranchAdminExistService(data.phone)
+        .then((value) => {
           requestOtp(`+966${data.phone}`);
-          navigate("/login_otp", {
-            state: { phone: data.phone, password: data.password },
+          navigate("/forget_password_otp", {
+            state: { phone: data.phone },
           });
+          console.log(value);
+          setLoading(false);
         })
         .catch((error) => {
-          setLoginLoading(false);
           console.log(error);
+          setLoading(false);
         });
     }
   };
@@ -83,10 +81,10 @@ const Login = () => {
     <div className="h-screen w-full flex flex-col justify-center p-4 items-center">
       <img src={logo} className="mb-4" alt="React logo" />
       <h3 className="text-[25px] text-title-dark font-semibold">
-        تسجيل الدخول للفرع
+        استعادة كلمة المرور
       </h3>
       <h5 className="text-[15px] text-title-light">
-        سجل الدخول لحسابك عن طريق رقم الجوال
+        ادخل رقم الجوال لاستعادة كلمة المرور
       </h5>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-[400px]">
         <div className="h-[22px]" />
@@ -115,28 +113,12 @@ const Login = () => {
           name="phone"
           errorMessage="الرجاء ادخال رقم جوال صالح"
         />
-        <div className="h-[8px]" />
-        <FromInput
-          register={{
-            ...register("password", {
-              required: {
-                value: true,
-                message: "الحقل مطلوب",
-              },
-            }),
-          }}
-          errors={errors.password}
-          type="password"
-          placeholder="كلمة المرور"
-          name="password"
-          errorMessage="الرجاء إدخال كلمة المرور"
-        />
         <div className="h-[13px]" />
         <button
           type="submit"
           className="h-[55px] bg-primary-color w-full flex items-center justify-center rounded-xl text-white text-[16px] font-medium hover:bg-primary-color-hover transition-colors fl"
         >
-          {isLoginLoading ? (
+          {isLoading ? (
             <Oval
               height={25}
               width={25}
@@ -150,22 +132,12 @@ const Login = () => {
               strokeWidthSecondary={4}
             />
           ) : (
-            <>تسجيل</>
+            <>تأكيد</>
           )}
         </button>
-        <div className="h-[20px]" />
-        <div className="flex gap-1 justify-center w-full">
-          <h5 className="text-[16px] text-title-light">نسيت كلمة المرور؟</h5>
-          <h5
-            className="text-[16px] text-orange-color cursor-pointer"
-            onClick={() => navigate("/forget_password")}
-          >
-            استعادة
-          </h5>
-        </div>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default ForgetPasswordPhonePage;

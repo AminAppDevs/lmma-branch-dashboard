@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  background-color: #FAFCFE;
+  font-family: "JF Flat";
+}
+
+.Toastify__toast-body { font-family: "JF Flat"; font-size: 14px; direction: rtl; }

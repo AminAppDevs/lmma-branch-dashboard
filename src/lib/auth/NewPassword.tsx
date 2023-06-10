@@ -1,18 +1,11 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FromInput from "./components/FromInput";
 import { Oval } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import {
-  ConfirmationResult,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
-import { auth } from "../../services/firebase.config";
 import { changeBranchAdminPasswordService } from "../../services/auth/login.services";
 
 export type NewPasswordInputs = {
@@ -23,29 +16,6 @@ export type NewPasswordInputs = {
 const NewPAssword = () => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-
-  ///// OTP Func
-  const requestOtp: any = (phone: string) => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "rest-password-otp",
-        {
-          size: "invisible",
-          callback: (response: any) => {
-            console.log(response);
-          },
-        },
-        auth
-      );
-    }
-    signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
-      .then((confirmationResult: ConfirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        console.log(confirmationResult);
-        console.log("codesend");
-      })
-      .catch((error) => console.log(error));
-  };
 
   const {
     register,

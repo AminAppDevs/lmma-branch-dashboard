@@ -2,7 +2,6 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import logo from "../../assets/logo.svg";
 import AuthCode from "react-auth-code-input";
-import { loginService } from "../../services/auth/login.services";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
@@ -31,7 +30,7 @@ const ForgetPasswordOtp = (props: any) => {
               theme: "colored",
             });
             setLoading(false);
-            navigate("/new_password");
+            navigate("/new_password", { state: { phone: state.phone } });
             console.log(props.location.state);
           })
           .catch((error: any) => {

@@ -1,7 +1,5 @@
 import { toast } from "react-toastify";
 import { LoginInput } from "../../lib/auth/Login";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
 
 import {
   changeBranchAdminPasswordEndPoint,
@@ -129,12 +127,15 @@ export const checkBranchAdminExistService = async (phone: string) => {
   }
 };
 
-export const changeBranchAdminPasswordService = async (password: string) => {
+export const changeBranchAdminPasswordService = async (
+  password: string,
+  phone: string
+) => {
   try {
-    const adminId: any = cookies.get("adminId");
+    console.log("phoooooone", phone);
     //// get admin id when check is exist
     const response = await axios.patch(`${changeBranchAdminPasswordEndPoint}`, {
-      adminId: adminId,
+      phone: phone,
       newPassword: password,
     });
     return response.data;

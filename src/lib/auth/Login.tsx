@@ -39,26 +39,28 @@ const Login = () => {
   });
 
   ///// OTP Func
-  const requestOtp: any = (phone: string) => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "login-otp",
-        {
-          size: "invisible",
-          callback: (response: any) => {
-            console.log(response);
+  const requestOtp: any = async (phone: string) => {
+    try {
+      if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+          "login-otp",
+          {
+            size: "invisible",
+            callback: (response: any) => {
+              console.log(response);
+            },
           },
-        },
-        auth
-      );
+          auth
+        );
+      }
+      const confirmationResult: ConfirmationResult =
+        await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+      window.confirmationResult = confirmationResult;
+      return confirmationResult;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-    signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
-      .then((confirmationResult: ConfirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        console.log(confirmationResult);
-        console.log("codesend");
-      })
-      .catch((error) => console.log(error));
   };
 
   /// form submit
@@ -68,10 +70,17 @@ const Login = () => {
       loginService(data)
         .then((value: any) => {
           console.log(value);
-          requestOtp(`+966${data.phone}`);
-          navigate("/login_otp", {
-            state: { phone: data.phone, password: data.password },
-          });
+          requestOtp(`+966${data.phone}`)
+            .then(() => {
+              setLoginLoading(false);
+              navigate("/login_otp", {
+                state: { phone: data.phone, password: data.password },
+              });
+            })
+            .catch((err: any) => {
+              console.log(err);
+              setLoginLoading(false);
+            });
         })
         .catch((error) => {
           setLoginLoading(false);

@@ -1,15 +1,90 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import logo from "../../assets/logo.svg";
 import AuthCode from "react-auth-code-input";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
+import {
+  RecaptchaVerifier,
+  ConfirmationResult,
+  signInWithPhoneNumber,
+} from "firebase/auth";
+import { auth } from "../../services/firebase.config";
+import { errorToast } from "../../utils/toastify";
 
 const ForgetPasswordOtp = (props: any) => {
   const [loading, setLoading] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  const [resendCountdown, setResendCountdown] = useState(10);
+  const [isResendShow, setIsResenShow] = useState(false);
+  const [isResendLoading, setIsResendLoading] = useState(false);
+
+  useEffect(() => {
+    if (resendCountdown > 0) {
+      const timer = setTimeout(
+        () => setResendCountdown(resendCountdown - 1),
+        1000
+      );
+      return () => clearTimeout(timer);
+    } else {
+      setIsResenShow(true);
+    }
+  }, [resendCountdown]);
+
+  /// handle resend otp code
+  const handleResendOtpCode = () => {
+    setIsResendLoading(true);
+    console.log("cccccccccccccccccccccccccccccc", state.phone);
+    requestOtp(state.phone)
+      .then(() => {
+        setIsResendLoading(false);
+        setIsResenShow(false);
+        setResendCountdown(10);
+      })
+      .catch(() => {
+        errorToast("يوجد خطأ ما الرجاء المحاولة مرة أخرى");
+        setIsResendLoading(false);
+        setIsResenShow(false);
+        setResendCountdown(10);
+      });
+  };
+
+  ///// OTP Func
+  const requestOtp: any = async (phone: string) => {
+    try {
+      if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+          "login-otp",
+          {
+            size: "invisible",
+            callback: (response: any) => {
+              console.log(response);
+            },
+          },
+          auth
+        );
+      }
+      const confirmationResult: ConfirmationResult =
+        await signInWithPhoneNumber(
+          auth,
+          `+966${phone}`,
+          window.recaptchaVerifier
+        );
+      window.confirmationResult = confirmationResult;
+      return confirmationResult;
+    } catch (error) {
+      errorToast("يوجد خطأ ما الرجاء المحاولة مرة أخرى");
+      console.log(error);
+      setIsResendLoading(false);
+      setIsResenShow(false);
+      setResendCountdown(10);
+      throw error;
+    }
+  };
+
   const handleConfirmCode = () => {
     if (!loading) {
       const confirmationResult = window.confirmationResult;
@@ -48,6 +123,7 @@ const ForgetPasswordOtp = (props: any) => {
             console.log(error);
           });
       } else {
+        errorToast("يوجد خطأ ما الرجاء المحاولة مرة أخرى");
         console.log(" otp not send");
       }
     }
@@ -93,6 +169,34 @@ const ForgetPasswordOtp = (props: any) => {
             <>تأكيد</>
           )}
         </div>
+        <div className="h-[20px]" />
+        {isResendLoading ? (
+          <div className="flex justify-center">
+            <Oval
+              height={25}
+              width={25}
+              color="#F5A225"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#F5A225"
+              strokeWidth={4}
+              strokeWidthSecondary={4}
+            />
+          </div>
+        ) : !isResendShow ? (
+          <h5 className="text-center text-[14px] text-title-lighter">
+            لم يصلك الرمز؟ يمكنك إعادة ارسال الرمز بعد {resendCountdown} ثانية
+          </h5>
+        ) : (
+          <h5
+            className="text-center text-orange-color underline cursor-pointer"
+            onClick={handleResendOtpCode}
+          >
+            إعادة ارسال الرمز
+          </h5>
+        )}
       </form>
     </div>
   );

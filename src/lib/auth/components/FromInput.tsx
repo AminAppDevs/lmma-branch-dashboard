@@ -1,6 +1,6 @@
 const FromInput = (props: any) => {
   return (
-    <>
+    <div className="w-full">
       <input
         type={props.type}
         placeholder={props.placeholder}
@@ -15,7 +15,7 @@ const FromInput = (props: any) => {
           {props.errorMessage}
         </span>
       )}
-    </>
+    </div>
   );
 };
 

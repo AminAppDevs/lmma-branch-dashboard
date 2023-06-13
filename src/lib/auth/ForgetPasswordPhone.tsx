@@ -1,9 +1,7 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { SubmitHandler, useForm } from "react-hook-form";
 import { checkBranchAdminExistService } from "../../services/auth/login.services";
 import FromInput from "./components/FromInput";
@@ -24,29 +22,6 @@ const ForgetPasswordPhonePage = () => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
-  ///// OTP Func
-  const requestOtp: any = (phone: string) => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "rest-password-otp",
-        {
-          size: "invisible",
-          callback: (response: any) => {
-            console.log(response);
-          },
-        },
-        auth
-      );
-    }
-    signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
-      .then((confirmationResult: ConfirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        console.log(confirmationResult);
-        console.log("codesend");
-      })
-      .catch((error) => console.log(error));
-  };
-
   const {
     register,
     handleSubmit,
@@ -56,6 +31,32 @@ const ForgetPasswordPhonePage = () => {
       phone: "",
     },
   });
+
+  ///// OTP Func
+  const requestOtp: any = async (phone: string) => {
+    try {
+      if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+          "rest-password-otp",
+          {
+            size: "invisible",
+            callback: (response: any) => {
+              console.log(response);
+            },
+          },
+          auth
+        );
+      }
+      const confirmationResult: ConfirmationResult =
+        await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+      window.confirmationResult = confirmationResult;
+      return confirmationResult;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
   /// form submit
   const onSubmit: SubmitHandler<ResetPasswordPhoneInput> = (
     data: ResetPasswordPhoneInput
@@ -64,12 +65,18 @@ const ForgetPasswordPhonePage = () => {
     if (!isLoading) {
       checkBranchAdminExistService(data.phone)
         .then((value) => {
-          requestOtp(`+966${data.phone}`);
-          navigate("/forget_password_otp", {
-            state: { phone: data.phone },
-          });
-          console.log(value);
-          setLoading(false);
+          requestOtp(`+966${data.phone}`)
+            .then(() => {
+              setLoading(false);
+              navigate("/forget_password_otp", {
+                state: { phone: data.phone },
+              });
+              console.log(value);
+            })
+            .catch((err: any) => {
+              setLoading(false);
+              console.log(err);
+            });
         })
         .catch((error) => {
           console.log(error);

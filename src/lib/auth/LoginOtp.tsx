@@ -39,7 +39,6 @@ const LoginOtp = (props: any) => {
   /// handle resend otp code
   const handleResendOtpCode = () => {
     setIsResendLoading(true);
-    console.log("cccccccccccccccccccccccccccccc", state.phone);
     requestOtp(state.phone)
       .then(() => {
         setIsResendLoading(false);

@@ -13,6 +13,7 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
+import { useAuthState } from "../../store/use_auth_state";
 
 export type ResetPasswordPhoneInput = {
   phone: string;
@@ -21,6 +22,7 @@ export type ResetPasswordPhoneInput = {
 const ForgetPasswordPhonePage = () => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
+  const useAuthStore = useAuthState();
 
   const {
     register,
@@ -61,6 +63,7 @@ const ForgetPasswordPhonePage = () => {
   const onSubmit: SubmitHandler<ResetPasswordPhoneInput> = (
     data: ResetPasswordPhoneInput
   ) => {
+    console.log(data);
     setLoading(true);
     if (!isLoading) {
       checkBranchAdminExistService(data.phone)
@@ -68,6 +71,7 @@ const ForgetPasswordPhonePage = () => {
           requestOtp(`+966${data.phone}`)
             .then(() => {
               setLoading(false);
+              useAuthStore.setPhone(data.phone);
               navigate("/forget_password_otp", {
                 state: { phone: data.phone },
               });

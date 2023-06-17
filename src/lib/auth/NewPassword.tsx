@@ -7,6 +7,7 @@ import FromInput from "./components/FromInput";
 import { Oval } from "react-loader-spinner";
 import { useNavigate, useLocation } from "react-router-dom";
 import { changeBranchAdminPasswordService } from "../../services/auth/login.services";
+import { useAuthState } from "../../store/use_auth_state";
 
 export type NewPasswordInputs = {
   password: string;
@@ -17,6 +18,7 @@ const NewPAssword = () => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const useAuthStore = useAuthState();
 
   const {
     register,
@@ -35,7 +37,7 @@ const NewPAssword = () => {
   ) => {
     setLoading(true);
     if (!isLoading) {
-      changeBranchAdminPasswordService(data.password, state.phone)
+      changeBranchAdminPasswordService(data.password, useAuthStore.phone)
         .then((value) => {
           console.log(value);
           navigate("/login");

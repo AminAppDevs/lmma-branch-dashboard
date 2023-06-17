@@ -11,12 +11,14 @@ import {
 } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
 import { errorToast } from "../../utils/toastify";
+import { useAuthState } from "../../store/use_auth_state";
 
 const ForgetPasswordOtp = (props: any) => {
   const [loading, setLoading] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
   const { state } = useLocation();
   const navigate = useNavigate();
+  const useAuthStore: any = useAuthState();
 
   const [resendCountdown, setResendCountdown] = useState(10);
   const [isResendShow, setIsResenShow] = useState(false);
@@ -38,7 +40,7 @@ const ForgetPasswordOtp = (props: any) => {
   const handleResendOtpCode = () => {
     setIsResendLoading(true);
     console.log("cccccccccccccccccccccccccccccc", state.phone);
-    requestOtp(state.phone)
+    requestOtp(useAuthStore.phone)
       .then(() => {
         setIsResendLoading(false);
         setIsResenShow(false);
@@ -105,7 +107,7 @@ const ForgetPasswordOtp = (props: any) => {
               theme: "colored",
             });
             setLoading(false);
-            navigate("/new_password", { state: { phone: state.phone } });
+            navigate("/new_password", { state: { phone: useAuthStore.phone } });
             console.log(props.location.state);
           })
           .catch((error: any) => {
@@ -133,7 +135,7 @@ const ForgetPasswordOtp = (props: any) => {
       <img src={logo} className="mb-4" alt="React logo" />
       <h3 className="text-[25px] text-title-dark font-semibold">تأكيد الرمز</h3>
       <h5 className="text-[15px] text-title-light">
-        ادخل الرمز المرسل لرقم الجوال: {state.phone}
+        ادخل الرمز المرسل لرقم الجوال: {useAuthStore.phone}
       </h5>
       <form className="w-full md:w-[450px]">
         <div className="h-[22px]" />

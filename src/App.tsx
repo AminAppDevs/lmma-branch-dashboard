@@ -16,6 +16,7 @@ import { Oval } from "react-loader-spinner";
 import Notifications from "./lib/notifications/Notifications";
 import CreactNewRole from "./lib/users/CreactNewRole";
 import UserRoles from "./lib/users/UsersRoles";
+import ForgetPasswordPhonePage from "./lib/auth/ForgetPasswordPhone";
 
 const App = () => {
   const getUserDetails = useUserDetailsState((state: any) => state.fetch);
@@ -52,23 +53,100 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <RequireAuth isLoginPage={true}>
+            <RequireAuth path="login" isLoginPage={true}>
               <Login />
             </RequireAuth>
           }
         />
-        <Route path="/login_otp" element={<LoginOtp />} />
-        <Route path="/forget_password" element={<ForgetPasswordOtp />} />
-        <Route path="/forget_password_otp" element={<ForgetPasswordOtp />} />
-        <Route path="/new_password" element={<NewPassword />} />
+        <Route
+          path="/login_otp"
+          element={
+            <RequireAuth path="login_otp" isLoginPage={true}>
+              <LoginOtp />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/forget_password"
+          element={
+            <RequireAuth path="forget_password" isLoginPage={true}>
+              <ForgetPasswordPhonePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/forget_password_otp"
+          element={
+            <RequireAuth path="forget_password_otp" isLoginPage={true}>
+              <ForgetPasswordOtp />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/new_password"
+          element={
+            <RequireAuth path="new_password" isLoginPage={true}>
+              <NewPassword />
+            </RequireAuth>
+          }
+        />
         {/* Pages */}
-        <Route path="/sales_orders/sales" element={<Sales />} />
-        <Route path="/sales_orders/orders" element={<Orders />} />
-        <Route path="/users/all_users" element={<AllUsers />} />
-        <Route path="/users/roles" element={<UserRoles />} />
-        <Route path="/users/create_branch_role" element={<CreactNewRole />} />
-        <Route path="/users/add_new_user" element={<AddNewUser />} />
-        <Route path="/notifications" element={<Notifications />} />
+        <Route
+          path="/sales_orders/sales"
+          element={
+            <RequireAuth>
+              <Sales />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/sales_orders/orders"
+          element={
+            <RequireAuth>
+              <Orders />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/users/all_users"
+          element={
+            <RequireAuth>
+              <AllUsers />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/users/roles"
+          element={
+            <RequireAuth>
+              <UserRoles />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/users/create_branch_role"
+          element={
+            <RequireAuth>
+              <CreactNewRole />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/users/add_new_user"
+          element={
+            <RequireAuth>
+              <AddNewUser />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <RequireAuth>
+              <Notifications />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </RootLayout>
   );

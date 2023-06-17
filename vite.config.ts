@@ -11,10 +11,5 @@ export default defineConfig({
     host: true, // needed for the Docker Container port mapping to work
     strictPort: true,
     port: 5173,
-    hmr: {
-      host: "https://lmma-branch-dash.captin.nadwatalmaerifa.com/",
-      port: 5173,
-      protocol: "wss",
-    },
   },
 });

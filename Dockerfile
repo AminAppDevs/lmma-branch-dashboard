@@ -1,12 +1,13 @@
-FROM node:16.17.1-alpine3.16
+FROM node
 
 WORKDIR /app
 
 COPY package.json .
-
-RUN npm install
+RUN npm i
 
 COPY . .
+
+## EXPOSE [Port you mentioned in the vite.config file]
 
 EXPOSE 5173
 

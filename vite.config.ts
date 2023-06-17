@@ -12,7 +12,7 @@ export default defineConfig({
     strictPort: true,
     port: 5173,
     hmr: {
-      host: "31.220.80.92",
+      host: "https://lmma-branch-dash.captin.nadwatalmaerifa.com/",
       port: 443,
       protocol: "wss",
     },

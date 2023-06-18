@@ -10,6 +10,16 @@
 }
 @font-face {
   font-family: 'JF';
+  font-weight: 500;
+  src: local('JF'), url('./assets/fonts/JF-Flat-medium.ttf') format('woff');
+}
+@font-face {
+  font-family: 'JF';
+  font-weight: 600;
+  src: local('JF'), url('./assets/fonts/JF-Flat-medium.ttf') format('woff');
+}
+@font-face {
+  font-family: 'JF';
   font-weight: 700;
   src: local('JF'), url('./assets/fonts/JF-Flat-medium.ttf') format('woff');
 }

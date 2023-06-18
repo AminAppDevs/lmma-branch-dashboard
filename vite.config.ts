@@ -12,8 +12,8 @@ export default defineConfig({
     strictPort: true,
     port: 5173, // you can replace this port with any port
     hmr: {
-      host: "31.220.80.92",
-      protocol: "ws",
+      host: "https://lmma-branch-dash.captin.nadwatalmaerifa.com/",
+      protocol: "https",
     },
   },
 });

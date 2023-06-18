@@ -8,13 +8,8 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-    strictPort: true,
-    host: true,
-    port: 5173,
-    hmr: {
-      clientPort: 5173,
-      port: 5174,
-      overlay: false,
-    },
+    host: true, // needed for the Docker Container port mapping to work
+    port: 5173, // you can replace this port with any port
+    base: "/lmma-branch-dashboard/",
   },
 });

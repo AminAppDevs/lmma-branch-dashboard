@@ -14,7 +14,7 @@ export default defineConfig({
     https: true,
     hmr: {
       host: "lmma-branch-dash.captin.nadwatalmaerifa.com",
-      port: 3001,
+      port: 5173,
       protocol: "wss",
     },
   },

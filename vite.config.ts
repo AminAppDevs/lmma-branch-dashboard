@@ -7,9 +7,8 @@ export default defineConfig({
   server: {
     watch: {
       usePolling: true,
-    }, // needed for the Docker Container port mapping to work
+    },
+    host: true, // needed for the Docker Container port mapping to work
     port: 5173, // you can replace this port with any port
-    // https: true,
-    host: "localhost",
   },
 });

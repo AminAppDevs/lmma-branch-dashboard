@@ -12,8 +12,8 @@ export type BranchUser = {
 };
 
 export const getUsersTableData = (data: any) => {
-  console.log(data);
-  const result: BranchUser[] = data?.map((value: any) => {
+  const admins = data.filter((value: any) => !value.isSuperAdmin);
+  const result: BranchUser[] = admins?.map((value: any) => {
     return {
       id: `${value.id}#`,
       name: value.name,

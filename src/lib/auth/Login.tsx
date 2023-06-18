@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
 import { Oval } from "react-loader-spinner";
+import { useAuthState } from "../../store/use_auth_state";
 declare global {
   interface Window {
     recaptchaVerifier: any;
@@ -25,6 +26,7 @@ export type LoginInput = {
   password: string;
 };
 const Login = () => {
+  const useAuthStore = useAuthState();
   const navigate = useNavigate();
   const [isLoginLoading, setLoginLoading] = React.useState(false);
   const {
@@ -73,6 +75,8 @@ const Login = () => {
           requestOtp(`+966${data.phone}`)
             .then(() => {
               setLoginLoading(false);
+              useAuthStore.setLoginPhone(data.phone);
+              useAuthStore.setLoginPassword(data.password);
               navigate("/login_otp", {
                 state: { phone: data.phone, password: data.password },
               });

@@ -4,8 +4,9 @@ import logo from "../../assets/logo.svg";
 import AuthCode from "react-auth-code-input";
 import { loginService } from "../../services/auth/login.services";
 import { useCookies } from "react-cookie";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
+import { useAuthState } from "../../store/use_auth_state";
 import {
   ConfirmationResult,
   RecaptchaVerifier,
@@ -14,15 +15,15 @@ import {
 import { auth } from "../../services/firebase.config";
 import { errorToast } from "../../utils/toastify";
 
-const LoginOtp = (props: any) => {
+const LoginOtp = () => {
   const [loading, setLoading] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
   const [, setCookie] = useCookies(["isLogin", "adminId", "token"]);
-  const { state } = useLocation();
   const navigate = useNavigate();
   const [resendCountdown, setResendCountdown] = useState(10);
   const [isResendShow, setIsResenShow] = useState(false);
   const [isResendLoading, setIsResendLoading] = useState(false);
+  const useAuthStore = useAuthState();
 
   useEffect(() => {
     if (resendCountdown > 0) {
@@ -39,7 +40,7 @@ const LoginOtp = (props: any) => {
   /// handle resend otp code
   const handleResendOtpCode = () => {
     setIsResendLoading(true);
-    requestOtp(state.phone)
+    requestOtp(useAuthStore.loginPhone)
       .then(() => {
         setIsResendLoading(false);
         setIsResenShow(false);
@@ -107,7 +108,10 @@ const LoginOtp = (props: any) => {
             });
             setLoading(false);
 
-            loginService({ phone: state.phone, password: state.password })
+            loginService({
+              phone: useAuthStore.loginPhone,
+              password: useAuthStore.loginPassword,
+            })
               .then((value) => {
                 const expirationDate = new Date(
                   Date.now() + 30 * 24 * 60 * 60 * 1000
@@ -129,7 +133,6 @@ const LoginOtp = (props: any) => {
                 setLoading(false);
                 console.log(error);
               });
-            console.log(props.location.state);
           })
           .catch((error: any) => {
             errorToast("الرمز غير صحيح");
@@ -147,7 +150,7 @@ const LoginOtp = (props: any) => {
       <img src={logo} className="mb-4" alt="React logo" />
       <h3 className="text-[25px] text-title-dark font-semibold">تأكيد الرمز</h3>
       <h5 className="text-[15px] text-title-light">
-        ادخل الرمز المرسل لرقم الجوال: {state.phone}
+        ادخل الرمز المرسل لرقم الجوال: {useAuthStore.loginPhone}
       </h5>
       <form className="w-full md:w-[450px]">
         <div className="h-[22px]" />

@@ -9,11 +9,12 @@ export default defineConfig({
       usePolling: true,
     },
     strictPort: true,
-    host: true, // needed for the Docker Container port mapping to work
-    port: 5173, // you can replace this port with any port
+    host: true,
+    port: 5173,
     hmr: {
       clientPort: 5173,
       port: 5174,
+      overlay: false,
     },
   },
 });

@@ -1,6 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Font */
+@font-face {
+  font-family: 'JF';
+  font-weight: 400;
+  src: local('JF'), url('./assets/fonts/JF-Flat-Regular.ttf') format('woff');
+}
+@font-face {
+  font-family: 'JF';
+  font-weight: 700;
+  src: local('JF'), url('./assets/fonts/JF-Flat-medium.ttf') format('woff');
+}
+
+
 body {
   background-color: #FAFCFE;
   font-family: "JF Flat";

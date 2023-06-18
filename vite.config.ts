@@ -13,7 +13,7 @@ export default defineConfig({
     port: 5173, // you can replace this port with any port
     hmr: {
       host: "31.220.80.92",
-      protocol: "wss",
+      protocol: "ws",
     },
   },
 });

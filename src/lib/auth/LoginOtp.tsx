@@ -116,11 +116,11 @@ const LoginOtp = () => {
                 const expirationDate = new Date(
                   Date.now() + 30 * 24 * 60 * 60 * 1000
                 );
-                setLoading(false);
-                setCookie("isLogin", true, {
+                setCookie("adminId", value.adminId, {
                   expires: expirationDate,
                 });
-                setCookie("adminId", value.adminId, {
+                setLoading(false);
+                setCookie("isLogin", true, {
                   expires: expirationDate,
                 });
                 setCookie("token", value.token, {

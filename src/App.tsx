@@ -10,13 +10,46 @@ import AllUsers from "./lib/users/AllUsers";
 import AddNewUser from "./lib/users/AddNewUser";
 import Login from "./lib/auth/Login";
 import Home from "./lib/home/Home";
+import { useEffect } from "react";
+import { useUserDetailsState } from "./store/useUserDetailsState";
+import { Oval } from "react-loader-spinner";
 import Notifications from "./lib/notifications/Notifications";
 import CreactNewRole from "./lib/users/CreactNewRole";
 import UserRoles from "./lib/users/UsersRoles";
 import ForgetPasswordPhonePage from "./lib/auth/ForgetPasswordPhone";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+import { useLocation } from "react-router-dom";
 
 const App = () => {
-  return (
+  const getUserDetails = useUserDetailsState((state: any) => state.fetch);
+  const isLoading = useUserDetailsState((state: any) => state.isLoading);
+  const adminId: number = cookies.get("adminId");
+  const location = useLocation();
+
+  useEffect(() => {
+    getUserDetails(adminId);
+    if (location.pathname == "/") {
+      getUserDetails(adminId);
+    }
+  }, [getUserDetails, adminId]);
+
+  return isLoading ? (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <Oval
+        height={30}
+        width={30}
+        color="#F1646D"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="oval-loading"
+        secondaryColor="#F1646D"
+        strokeWidth={4}
+        strokeWidthSecondary={4}
+      />
+    </div>
+  ) : (
     <RootLayout>
       <Routes>
         <Route

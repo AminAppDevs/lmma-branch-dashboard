@@ -12,7 +12,7 @@ import { Oval } from "react-loader-spinner";
 
 const AllUsers = () => {
   const userDetails = useUserDetailsState((state: any) => state.userDetails);
-  const { data, error, isLoading }: any = useSWR(
+  const { data, isLoading }: any = useSWR(
     getAllBranchUsersEndPoint,
     async (url) =>
       await axios.get(

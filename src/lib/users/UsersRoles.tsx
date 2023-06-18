@@ -9,7 +9,7 @@ import { getRolesTableData, rolesColumns } from "./components/roles.table.data";
 
 const UserRoles = () => {
   const userDetails = useUserDetailsState((state: any) => state.userDetails);
-  const { data, error, isLoading }: any = useSWR(
+  const { data, isLoading }: any = useSWR(
     `${GetAllBranchRolesEndPoint}`,
     async (url) =>
       await axios.get(

@@ -4,7 +4,7 @@ export const useSidebarState = create((set) => ({
   activeNavLink: 1,
   activeSubMenu: 0,
   changeActiveLinkId: (by: number) =>
-    set((state: any) => ({
+    set(() => ({
       activeNavLink: by,
       activeSubMenu: by,
     })),

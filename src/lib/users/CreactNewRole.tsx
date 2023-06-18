@@ -47,7 +47,7 @@ const CreactNewRole = () => {
     } else {
       try {
         setIsCreateRoleLoading(true);
-        const res = await createBranchRoleService(
+        await createBranchRoleService(
           userDetails.branchId,
           data.roleTitle,
           permissionsIds
@@ -60,7 +60,7 @@ const CreactNewRole = () => {
     }
   };
 
-  const { data, error, isLoading }: any = useSWR(
+  const { data, isLoading }: any = useSWR(
     getAllBranchPermissionsEndPoint,
     async (url) => await axios.get(url),
     { suspense: false }

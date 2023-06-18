@@ -9,12 +9,6 @@ export default defineConfig({
       usePolling: true,
     },
     host: true, // needed for the Docker Container port mapping to work
-    strictPort: true,
-    port: 5173, // you can replace this port with any port
-    hmr: {
-      host: "lmma-branch-dash.captin.nadwatalmaerifa.com",
-      port: 5173,
-      protocol: "wss",
-    },
+    port: 8000, // you can replace this port with any port
   },
 });

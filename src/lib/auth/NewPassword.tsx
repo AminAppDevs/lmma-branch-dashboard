@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FromInput from "./components/FromInput";
 import { Oval } from "react-loader-spinner";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { changeBranchAdminPasswordService } from "../../services/auth/login.services";
 import { useAuthState } from "../../store/use_auth_state";
 
@@ -17,7 +17,6 @@ export type NewPasswordInputs = {
 const NewPAssword = () => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-  const { state } = useLocation();
   const useAuthStore = useAuthState();
 
   const {

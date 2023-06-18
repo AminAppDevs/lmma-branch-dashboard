@@ -12,7 +12,6 @@ export default defineConfig({
     port: 5173, // you can replace this port with any port
     hmr: {
       port: 5174,
-      overlay: false,
     },
   },
 });

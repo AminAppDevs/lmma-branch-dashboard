@@ -10,36 +10,13 @@ import AllUsers from "./lib/users/AllUsers";
 import AddNewUser from "./lib/users/AddNewUser";
 import Login from "./lib/auth/Login";
 import Home from "./lib/home/Home";
-import { useEffect } from "react";
-import { useUserDetailsState } from "./store/useUserDetailsState";
-import { Oval } from "react-loader-spinner";
 import Notifications from "./lib/notifications/Notifications";
 import CreactNewRole from "./lib/users/CreactNewRole";
 import UserRoles from "./lib/users/UsersRoles";
 import ForgetPasswordPhonePage from "./lib/auth/ForgetPasswordPhone";
 
 const App = () => {
-  const getUserDetails = useUserDetailsState((state: any) => state.fetch);
-  const isLoading = useUserDetailsState((state: any) => state.isLoading);
-  useEffect(() => {
-    getUserDetails();
-  }, [getUserDetails]);
-  return isLoading ? (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <Oval
-        height={30}
-        width={30}
-        color="#F1646D"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-        ariaLabel="oval-loading"
-        secondaryColor="#F1646D"
-        strokeWidth={4}
-        strokeWidthSecondary={4}
-      />
-    </div>
-  ) : (
+  return (
     <RootLayout>
       <Routes>
         <Route

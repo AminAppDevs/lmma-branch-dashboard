@@ -11,6 +11,7 @@ export default defineConfig({
     host: true,
     port: 5173,
     origin: "https://localhost:5173",
+    https: true,
     hmr: { clientPort: 5173 },
   },
 });

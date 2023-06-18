@@ -10,8 +10,9 @@ export default defineConfig({
     },
     host: true, // needed for the Docker Container port mapping to work
     port: 5173, // you can replace this port with any port
+    https: true,
     hmr: {
-      port: 5174,
+      clientPort: 9026,
     },
   },
 });

@@ -20,19 +20,23 @@ import ForgetPasswordPhonePage from "./lib/auth/ForgetPasswordPhone";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { useLocation } from "react-router-dom";
+import AdminAccountDetails from "./lib/users/AdminAccountDetails";
 
 const App = () => {
   const getUserDetails = useUserDetailsState((state: any) => state.fetch);
   const isLoading = useUserDetailsState((state: any) => state.isLoading);
   const adminId: number = cookies.get("adminId");
+  const isLogin: any = cookies.get("isLogin");
   const location = useLocation();
 
   useEffect(() => {
     getUserDetails(adminId);
     if (location.pathname == "/") {
-      getUserDetails(adminId);
+      if (isLogin) {
+        getUserDetails(adminId);
+      }
     }
-  }, [getUserDetails, adminId]);
+  }, [getUserDetails, adminId, isLogin]);
 
   return isLoading ? (
     <div className="w-screen h-screen flex justify-center items-center">
@@ -117,6 +121,7 @@ const App = () => {
             </RequireAuth>
           }
         />
+        {/* Users */}
         <Route
           path="/users/all_users"
           element={
@@ -149,6 +154,15 @@ const App = () => {
             </RequireAuth>
           }
         />
+        <Route
+          path="/admin_account_details"
+          element={
+            <RequireAuth>
+              <AdminAccountDetails />
+            </RequireAuth>
+          }
+        />
+        {/* Notifications */}
         <Route
           path="/notifications"
           element={

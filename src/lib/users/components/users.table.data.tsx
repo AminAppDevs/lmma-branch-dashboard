@@ -30,7 +30,7 @@ export const getUsersTableData = (data: any) => {
 export const branchUserColumns: ColumnDef<BranchUser>[] = [
   {
     accessorKey: "id",
-    header: "رقم",
+    header: "#",
     cell: ({ row }) => {
       return (
         <div className="text-right font-medium text-title-dark">
@@ -41,7 +41,7 @@ export const branchUserColumns: ColumnDef<BranchUser>[] = [
   },
   {
     accessorKey: "name",
-    header: "اسم الموظف",
+    header: "الإسم",
   },
   {
     accessorKey: "email",
@@ -60,15 +60,21 @@ export const branchUserColumns: ColumnDef<BranchUser>[] = [
     header: "الحالة",
     cell: ({ row }) => {
       return row.getValue("isActive") ? (
-        <div className="text-right font-medium text-green-color">نشط</div>
+        <div className="text-right text-green-color">نشط</div>
       ) : (
-        <div className="text-right font-medium text-title-dark">محظور</div>
+        <div className="text-right text-title-dark">محظور</div>
       );
     },
   },
   {
     accessorKey: "createdAt",
     header: "تاريخ الإنشاء",
+    cell: ({ row }) => {
+      const result = new Intl.DateTimeFormat("ar").format(
+        new Date(row.getValue("createdAt"))
+      );
+      return <div className="text-right">{result}</div>;
+    },
   },
   {
     accessorKey: "details",
@@ -76,8 +82,8 @@ export const branchUserColumns: ColumnDef<BranchUser>[] = [
     cell: () => {
       return (
         <NavLink to={"/"}>
-          <div className="text-right font-medium text-green-color underline hover:text-orange-color">
-            عرض التفاصيل
+          <div className="text-right text-[15px] text-green-color underline hover:text-orange-color">
+            تفاصيل
           </div>
         </NavLink>
       );

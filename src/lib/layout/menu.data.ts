@@ -87,9 +87,9 @@ export const menuData = [
     id: 5,
     title: "حسابك",
     icon: IoPersonOutline,
-    path: "/sales_orders/orders",
+    path: "/admin_account_details",
     isSubmenu: false,
-    permission: "view_orders",
+    permission: "/",
   },
   {
     id: 6,

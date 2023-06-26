@@ -33,7 +33,7 @@ const UserRoles = () => {
       />
     </div>
   ) : (
-    <div className="container mx-auto mt-3">
+    <div className="lg:container lg:mx-auto mt-3 px-3">
       <div className="bg-white rounded-xl py-2 px-3 flex items-center justify-between mt-3">
         <h3 className="text-title-dark text-[18px] font-semibold">
           كل الصلاحيات
@@ -44,7 +44,7 @@ const UserRoles = () => {
           </div>
         </NavLink>
       </div>
-      <div className="container mx-auto mt-3">
+      <div className="mt-2 bg-white rounded-xl overflow-x-auto">
         <DataTable
           columns={rolesColumns}
           data={getRolesTableData(data?.data)}

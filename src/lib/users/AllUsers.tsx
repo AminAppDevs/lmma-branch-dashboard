@@ -37,7 +37,7 @@ const AllUsers = () => {
       />
     </div>
   ) : (
-    <div className="mt-2 lg:container lg:mx-auto px-4">
+    <div className="mt-2 lg:container lg:mx-auto px-3">
       <div className="bg-white rounded-xl py-2 px-3 flex items-center justify-between">
         <h3 className="text-title-dark text-[18px] font-semibold">الموظفين</h3>
         <NavLink to={"/users/permissions"}>
@@ -46,7 +46,7 @@ const AllUsers = () => {
           </div>
         </NavLink>
       </div>
-      <div className="container mx-auto mt-2">
+      <div className="lg:container lg:mx-auto mt-2 bg-white rounded-xl overflow-x-auto">
         <DataTable
           columns={branchUserColumns}
           data={getUsersTableData(data?.data)}

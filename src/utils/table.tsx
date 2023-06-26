@@ -32,13 +32,13 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-xl bg-white p0">
+    <div className="rounded-xl bg-white p-0" dir="rtl">
       <Table className="p-0">
-        <TableHeader className="text-right py-4 text-[16px] text-title-dark h-12 p-0">
+        <TableHeader className="py-5 text-[14px] text-title-dark h-12 p-0 font-normal">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
-              className="border-b border-[#F0F4F9] p-0"
+              className="border-b border-[#F0F4F9] p-0 text-right"
             >
               {headerGroup.headers.map((header) => {
                 return (

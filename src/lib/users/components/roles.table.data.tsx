@@ -51,6 +51,12 @@ export const rolesColumns: ColumnDef<Role>[] = [
   {
     accessorKey: "createdAt",
     header: "تاريخ الإنشاء",
+    cell: ({ row }) => {
+      const result = new Intl.DateTimeFormat("ar").format(
+        new Date(row.getValue("createdAt"))
+      );
+      return <div className="text-right">{result}</div>;
+    },
   },
 
   {
@@ -59,7 +65,7 @@ export const rolesColumns: ColumnDef<Role>[] = [
     cell: () => {
       return (
         <NavLink to={"/"}>
-          <div className="text-right font-medium text-green-color underline hover:text-orange-color">
+          <div className="text-right text-green-color underline hover:text-orange-color">
             تعديل
           </div>
         </NavLink>

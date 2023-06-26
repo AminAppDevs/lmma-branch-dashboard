@@ -81,7 +81,7 @@ const CreactNewRole = () => {
       />
     </div>
   ) : (
-    <div className="container mx-auto">
+    <div className="lg:container lg:mx-auto px-3">
       <ToastContainer />
       <div className="bg-white rounded-xl py-2 px-3 flex items-center justify-between mt-3">
         <h3 className="text-title-dark text-[18px] font-semibold">
@@ -93,10 +93,10 @@ const CreactNewRole = () => {
           </div>
         </NavLink>
       </div>
-      <div className="bg-white rounded-xl mt-2">
+      <div className="bg-white rounded-xl mt-2 overflow-x-auto">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="py-6 border-[#F0F4F9] gap-5 border-b border-dashed px-4 flex  justify-between "
+          className="py-6 border-[#F0F4F9] md:gap-5 gap-2 border-b border-dashed px-4 flex md:flex-row flex-col justify-between "
         >
           <FromInput
             type="text"
@@ -112,7 +112,7 @@ const CreactNewRole = () => {
           />
           <button
             type="submit"
-            className="bg-green-color h-[49px] py-[14px] rounded-xl text-[15px] text-white w-[200px] flex justify-center"
+            className="bg-green-color w-full h-[49px] py-[14px] rounded-xl text-[15px] text-white md:w-[200px] flex justify-center"
           >
             {isCreateRoleLoading ? (
               <Oval
@@ -152,7 +152,7 @@ const CreactNewRole = () => {
               <div className="min-w-[120px] border-l border-[#F0F4F9] ml-6 py-3">
                 <h2 className="text-title-dark">{key}</h2>
               </div>
-              <div className="flex gap-6">
+              <div className="flex md:gap-6 gap-1 py-3 md:flex-row flex-col">
                 {data.data[key].map((permission: any, index: number) => {
                   return (
                     <div

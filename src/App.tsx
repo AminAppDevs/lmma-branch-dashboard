@@ -20,7 +20,7 @@ import ForgetPasswordPhonePage from "./lib/auth/ForgetPasswordPhone";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { useLocation } from "react-router-dom";
-import AdminAccountDetails from "./lib/users/AdminAccountDetails";
+import AdminAccountDetails from "./lib/account/AdminAccountDetails";
 
 const App = () => {
   const getUserDetails = useUserDetailsState((state: any) => state.fetch);

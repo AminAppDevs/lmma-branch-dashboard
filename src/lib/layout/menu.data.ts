@@ -122,7 +122,7 @@ export const menuData = [
       },
       {
         id: 10,
-        title: "أضف مستخدم جديد",
+        title: "أضف موظف جديد",
         path: "/users/add_new_user",
         isSubmenu: false,
         permission: "edit_employees",

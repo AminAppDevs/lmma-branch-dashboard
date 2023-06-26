@@ -2,12 +2,10 @@ import { useUserDetailsState } from "../../store/useUserDetailsState";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../../../components/ui/dialog";
-import { FormInput } from "lucide-react";
 
 const AdminAccountDetails = () => {
   const useUserDetailsStore: any = useUserDetailsState();

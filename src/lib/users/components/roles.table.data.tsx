@@ -66,7 +66,7 @@ export const rolesColumns: ColumnDef<Role>[] = [
       return (
         <NavLink to={"/"}>
           <div className="text-right text-green-color underline hover:text-orange-color">
-            تعديل
+            تفاصيل
           </div>
         </NavLink>
       );

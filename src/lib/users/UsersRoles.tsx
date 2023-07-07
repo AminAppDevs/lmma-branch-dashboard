@@ -6,9 +6,11 @@ import { Oval } from "react-loader-spinner";
 import { NavLink } from "react-router-dom";
 import useSWR from "swr";
 import { getRolesTableData, rolesColumns } from "./components/roles.table.data";
+import { hasPermissionMethod } from "../../utils/has_permissionMethod";
 
 const UserRoles = () => {
   const userDetails = useUserDetailsState((state: any) => state.userDetails);
+  const useUserDetailsStore = useUserDetailsState();
   const { data, isLoading }: any = useSWR(
     `${GetAllBranchRolesEndPoint}`,
     async (url) =>
@@ -38,11 +40,15 @@ const UserRoles = () => {
         <h3 className="text-title-dark text-[18px] font-semibold">
           كل الصلاحيات
         </h3>
-        <NavLink to={"/users/create_branch_role"}>
-          <div className="bg-orange-color hover:bg-orange-color-dark rounded-xl px-5 py-2 text-white cursor-pointer">
-            أضف صلاحية جديدة
-          </div>
-        </NavLink>
+        {hasPermissionMethod(useUserDetailsStore, "edit_roles") ? (
+          <NavLink to={"/users/create_branch_role"}>
+            <div className="bg-orange-color hover:bg-orange-color-dark rounded-xl px-5 py-2 text-white cursor-pointer">
+              أضف صلاحية جديدة
+            </div>
+          </NavLink>
+        ) : (
+          <div className="py-5"></div>
+        )}
       </div>
       <div className="mt-2 bg-white rounded-xl overflow-x-auto">
         <DataTable

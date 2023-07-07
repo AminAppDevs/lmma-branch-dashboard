@@ -28,11 +28,11 @@ const SideBar = () => {
   );
 
   /// handle logout
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    removeCookie("isLogin", { path: "/" });
+    removeCookie("adminId", { path: "/" });
+    removeCookie("token", { path: "/" });
     navigate("/login");
-    removeCookie("isLogin");
-    removeCookie("adminId");
-    removeCookie("token");
   };
 
   const submenu_animation = {
@@ -168,12 +168,13 @@ const SideBar = () => {
         </ul>
       </div>
       {/* button */}
-      <div
+      <button
+        type="button"
         className="bg-red-500 bg-opacity-10 h-[45px] text-red-500 flex items-center justify-center cursor-pointer"
         onClick={handleLogout}
       >
         تسجيل الخروج
-      </div>
+      </button>
     </div>
   );
 };

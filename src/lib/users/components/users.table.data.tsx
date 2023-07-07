@@ -79,9 +79,10 @@ export const branchUserColumns: ColumnDef<BranchUser>[] = [
   {
     accessorKey: "details",
     header: "تفاصيل",
-    cell: () => {
+    cell: ({ row }) => {
+      const id = row.getValue("id");
       return (
-        <NavLink to={"/"}>
+        <NavLink to={`/users/user_details/${id}`}>
           <div className="text-right text-[15px] text-green-color underline hover:text-orange-color">
             تفاصيل
           </div>

@@ -21,9 +21,12 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { useLocation } from "react-router-dom";
 import AdminAccountDetails from "./lib/account/AdminAccountDetails";
+import UserDetails from "./lib/users/UserDetails";
+import UserBlocked from "./utils/UserBlocked";
 
 const App = () => {
   const getUserDetails = useUserDetailsState((state: any) => state.fetch);
+  const useUserDetailsStore: any = useUserDetailsState();
   const isLoading = useUserDetailsState((state: any) => state.isLoading);
   const adminId: number = cookies.get("adminId");
   const isLogin: any = cookies.get("isLogin");
@@ -53,6 +56,8 @@ const App = () => {
         strokeWidthSecondary={4}
       />
     </div>
+  ) : !useUserDetailsStore?.userDetails.isActive && isLogin ? (
+    <UserBlocked />
   ) : (
     <RootLayout>
       <Routes>
@@ -151,6 +156,14 @@ const App = () => {
           element={
             <RequireAuth>
               <AddNewUser />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/users/user_details/:id"
+          element={
+            <RequireAuth>
+              <UserDetails />
             </RequireAuth>
           }
         />

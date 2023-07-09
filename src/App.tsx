@@ -23,6 +23,9 @@ import { useLocation } from "react-router-dom";
 import AdminAccountDetails from "./lib/account/AdminAccountDetails";
 import UserDetails from "./lib/users/UserDetails";
 import UserBlocked from "./utils/UserBlocked";
+import StoresRequestJoin from "./lib/stores/StoresRequestJoin";
+import AllStores from "./lib/stores/AllStores";
+import ReviewStoreJoinDetails from "./lib/stores/ReviewStoreJoinDetails";
 
 const App = () => {
   const getUserDetails = useUserDetailsState((state: any) => state.fetch);
@@ -181,6 +184,31 @@ const App = () => {
           element={
             <RequireAuth>
               <Notifications />
+            </RequireAuth>
+          }
+        />
+        {/* Stores */}
+        <Route
+          path="/stores/join_request"
+          element={
+            <RequireAuth>
+              <StoresRequestJoin />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/stores/join_request/:id"
+          element={
+            <RequireAuth>
+              <ReviewStoreJoinDetails />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/stores/all_stores"
+          element={
+            <RequireAuth>
+              <AllStores />
             </RequireAuth>
           }
         />

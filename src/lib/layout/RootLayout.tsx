@@ -37,7 +37,7 @@ function RootLayout({ children }: any) {
         <div className="w-full flex flex-col">
           {sideBarNotShow(location.pathname) ? <TopHeader /> : <></>}
           <main
-            className={`w-full overflow-scroll  ${
+            className={`w-full overflow-y-auto ${
               sideBarNotShow(location.pathname)
                 ? "h-[calc(100vh-60px)]"
                 : "h-[100vh]"

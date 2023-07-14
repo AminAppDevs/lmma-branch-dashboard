@@ -74,6 +74,10 @@ const AccountPhone = (props: any) => {
                     placeholder="رقم الجوال"
                     {...accountPhoneForm.register("phone", {
                       required: "الحقل فارغ",
+                      pattern: {
+                        value: /^0\d{9}$/,
+                        message: "الرجاء ادخال رقم جوال صالح - 10 أرقام",
+                      },
                       validate: (value: string) => {
                         if (
                           value ===
@@ -83,6 +87,14 @@ const AccountPhone = (props: any) => {
                         }
                       },
                     })}
+                    onKeyPress={(event: any) => {
+                      if (
+                        !/[0-9]/.test(event.key) ||
+                        event.target.value.length >= 10
+                      ) {
+                        event.preventDefault();
+                      }
+                    }}
                     className="bg-white p-3 rounded-xl w-full outline-1 outline outline-input-border focus:outline-orange-color placeholder:text-input-placeholder placeholder:text-[15px] leading-6 text-title-light mt-2"
                   />
                 </div>

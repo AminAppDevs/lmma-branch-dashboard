@@ -74,6 +74,11 @@ const AccountEmail = (props: any) => {
                     placeholder="البريد الإلكتروني"
                     {...accountEmailForm.register("email", {
                       required: "الحقل فارغ",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+                        message: "الرجاء إدخال بريد إلكتروني صحيح",
+                      },
                       validate: (value: string) => {
                         if (
                           value ===

@@ -5,18 +5,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../../../components/ui/dialog";
-import Cookies from "universal-cookie";
 import { ToastContainer } from "react-toastify";
 import { hasPermissionMethod } from "../../../utils/has_permissionMethod";
-const cookies = new Cookies();
 
 const UserDetailsAccountStatus = (props: any) => {
-  const adminId: number = cookies.get("adminId");
-
   ///// handle change user role
-  const handleAccountStatus = async () => {
-    1;
-  };
 
   return (
     <div>

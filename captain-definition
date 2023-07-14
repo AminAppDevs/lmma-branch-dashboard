@@ -1,9 +1,13 @@
 {
     "schemaVersion": 2,
     "dockerfileLines": [
-        "FROM socialengine/nginx-spa:latest",
-        "RUN npm build",
-        "COPY ./dist /app",
-        "RUN chmod -R 777 /app"
+        "FROM node:18-alpine",
+        "WORKDIR /app",
+        "COPY package*.json ./",
+        "RUN npm install",
+        "COPY . .",
+        "RUN npm run build",
+        "EXPOSE 3000",
+        "CMD [\"npm\", \"run\", \"start:prod\"]"
     ]
 }
